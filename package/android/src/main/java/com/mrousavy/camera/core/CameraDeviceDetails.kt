@@ -13,10 +13,11 @@ import androidx.camera.core.DynamicRange
 import androidx.camera.core.FocusMeteringAction
 import androidx.camera.core.SurfaceOrientedMeteringPointFactory
 import androidx.camera.core.impl.CameraInfoInternal
-import androidx.camera.core.impl.capability.PreviewCapabilitiesImpl
+//import androidx.camera.core.impl.capability.PreviewCapabilitiesImpl
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.extensions.ExtensionsManager
-import androidx.camera.video.Quality.ConstantQuality
+import androidx.camera.video.QualitySelector
+//import androidx.camera.video.Quality.ConstantQuality
 import androidx.camera.video.Recorder
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableArray
@@ -54,8 +55,10 @@ class CameraDeviceDetails(private val cameraInfo: CameraInfo, extensionsManager:
   private val supportsRawCapture = false
   private val supportsDepthCapture = false
   private val autoFocusSystem = if (supportsFocus) AutoFocusSystem.CONTRAST_DETECTION else AutoFocusSystem.NONE
-  private val previewCapabilities = PreviewCapabilitiesImpl.from(cameraInfo)
-  private val videoCapabilities = Recorder.getVideoCapabilities(cameraInfo, Recorder.VIDEO_CAPABILITIES_SOURCE_CAMCORDER_PROFILE)
+
+  //  private val previewCapabilities = PreviewCapabilitiesImpl.from(cameraInfo)
+//  private val videoCapabilities = Recorder.getVideoCapabilities(cameraInfo, Recorder.VIDEO_CAPABILITIES_SOURCE_CAMCORDER_PROFILE)
+  private val videoCapabilities = Recorder.getVideoCapabilities(cameraInfo)
   private val supports10BitHdr = getSupports10BitHDR()
   private val sensorRotationDegrees = cameraInfo.sensorRotationDegrees
   private val sensorOrientation = Orientation.fromRotationDegrees(sensorRotationDegrees)
@@ -120,7 +123,8 @@ class CameraDeviceDetails(private val cameraInfo: CameraInfo, extensionsManager:
     dynamicRangeProfiles.forEach { dynamicRange ->
       try {
         val qualities = videoCapabilities.getSupportedQualities(dynamicRange)
-        val videoSizes = qualities.map { it as ConstantQuality }.flatMap { it.typicalSizes }
+//        val videoSizes = qualities.map { it as ConstantQuality }.flatMap { it.typicalSizes }
+        val videoSizes = qualities.mapNotNull { QualitySelector.getResolution(cameraInfo, it) }
         val photoSizes = cameraInfoInternal.getSupportedResolutions(ImageFormat.JPEG)
         val fpsRanges = cameraInfo.supportedFrameRateRanges
         val minFps = fpsRanges.minOf { it.lower }
@@ -211,12 +215,12 @@ class CameraDeviceDetails(private val cameraInfo: CameraInfo, extensionsManager:
 
   private fun createStabilizationModes(): ReadableArray {
     val modes = mutableSetOf(VideoStabilizationMode.OFF)
-    if (videoCapabilities.isStabilizationSupported) {
-      modes.add(VideoStabilizationMode.CINEMATIC)
-    }
-    if (previewCapabilities.isStabilizationSupported) {
-      modes.add(VideoStabilizationMode.CINEMATIC_EXTENDED)
-    }
+//    if (videoCapabilities.isStabilizationSupported) {
+//      modes.add(VideoStabilizationMode.CINEMATIC)
+//    }
+//    if (previewCapabilities.isStabilizationSupported) {
+//      modes.add(VideoStabilizationMode.CINEMATIC_EXTENDED)
+//    }
 
     val array = Arguments.createArray()
     modes.forEach { mode ->

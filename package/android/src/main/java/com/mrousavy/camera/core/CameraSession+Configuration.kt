@@ -65,7 +65,7 @@ internal fun CameraSession.configureOutputs(configuration: CameraConfiguration) 
         assertFormatRequirement("videoStabilizationMode", format, InvalidVideoStabilizationMode(configuration.videoStabilizationMode)) {
           it.videoStabilizationModes.contains(configuration.videoStabilizationMode)
         }
-        preview.setPreviewStabilizationEnabled(true)
+//        preview.setPreviewStabilizationEnabled(true)
       }
       if (fpsRange != null) {
         assertFormatRequirement("fps", format, InvalidFpsError(fpsRange.upper)) {
@@ -154,7 +154,7 @@ internal fun CameraSession.configureOutputs(configuration: CameraConfiguration) 
         assertFormatRequirement("videoStabilizationMode", format, InvalidVideoStabilizationMode(configuration.videoStabilizationMode)) {
           it.videoStabilizationModes.contains(configuration.videoStabilizationMode)
         }
-        video.setVideoStabilizationEnabled(true)
+//        video.setVideoStabilizationEnabled(true)
       }
       if (fpsRange != null) {
         assertFormatRequirement("fps", format, InvalidFpsError(fpsRange.upper)) {

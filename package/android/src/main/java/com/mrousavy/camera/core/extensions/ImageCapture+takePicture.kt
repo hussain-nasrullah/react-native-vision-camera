@@ -49,14 +49,14 @@ suspend inline fun ImageCapture.takePicture(
       outputFileOptions,
       executor,
       object : ImageCapture.OnImageSavedCallback {
-        override fun onCaptureStarted() {
-          super.onCaptureStarted()
-          if (enableShutterSound) {
-            shutterSound?.play(MediaActionSound.SHUTTER_CLICK)
-          }
-
-          callback.onShutter(ShutterType.PHOTO)
-        }
+//        override fun onCaptureStarted() {
+//          super.onCaptureStarted()
+//          if (enableShutterSound) {
+//            shutterSound?.play(MediaActionSound.SHUTTER_CLICK)
+//          }
+//
+//          callback.onShutter(ShutterType.PHOTO)
+//        }
 
         @SuppressLint("RestrictedApi")
         override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {

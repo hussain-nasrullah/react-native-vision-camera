@@ -65,8 +65,8 @@ npm-debug.log
 /coverage
 
 # TypeScript output
-/lib
-/example/lib
+# /lib
+# /example/lib
 
 # Gems
 **/vendor/

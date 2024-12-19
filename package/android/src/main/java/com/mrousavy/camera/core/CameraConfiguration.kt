@@ -77,7 +77,7 @@ data class CameraConfiguration(
     }
 
   @Suppress("EqualsOrHashCode")
-  sealed class Output<T> {
+  open class Output<T> {
     val isEnabled: Boolean
       get() = this is Enabled<*>
     class Disabled<T> private constructor() : Output<T>() {
